@@ -1,29 +1,37 @@
-<div class="login-container">
-  <!-- header avec bouton retour -->
-  <header class="login-header">
-    <button mat-icon-button routerLink="/">
-      <mat-icon>arrow_back</mat-icon>
-    </button>
-  </header>
+<div class="login-page">
+  <!-- flèche hors container, au-dessus du header -->
+  <button
+    mat-icon-button
+    class="back-btn"
+    (click)="goBack()"
+    aria-label="Retour">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
 
-  <!-- logo toujours en priorité LCP -->
-  <img ngSrc="assets/logo_p6.png" alt="Logo MDD" class="logo" priority/>
+  <div class="login-container">
+    <img ngSrc="assets/logo_p6.png" alt="Logo MDD" class="login-image" width="695" height="401" priority/>
 
-  <h1>Se connecter</h1>
+    <h2>Se connecter</h2>
 
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>E-mail ou nom d’utilisateur</mat-label>
-      <input matInput formControlName="username" />
+      <input matInput [(ngModel)]="credentials.username" />
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Mot de passe</mat-label>
-      <input matInput type="password" formControlName="password" />
+      <input
+        matInput
+        [type]="hide ? 'password' : 'text'"
+        [(ngModel)]="credentials.password" />
+      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="hide ? 'Afficher le mot de passe' : 'Masquer le mot de passe'">
+        <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+      </button>
     </mat-form-field>
 
-    <button mat-stroked-button type="submit" class="login-button" [disabled]="loginForm.invalid">
+    <!-- on garde color="primary" pour le theming, mais override en CSS local -->
+    <button mat-flat-button color="primary" class="login-btn" (click)="onLogin()">
       Se connecter
     </button>
-  </form>
+  </div>
 </div>

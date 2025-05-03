@@ -1,7 +1,42 @@
-/* You can add global styles to this file, and also import other style files */
+// ───────────────────────────────────────────────
+// 1) TOUT en-tête @use/@forward avant toute règle
+@use '@angular/material' as mat;
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+// 2) Définition de vos palettes
+$custom-primary: mat.m2-define-palette(mat.$m2-deep-purple-palette, 500, 300, 700);
+$custom-accent:  mat.m2-define-palette(mat.$m2-purple-palette, A200, A100, A400);
+$custom-warn:    mat.m2-define-palette(mat.$m2-red-palette);
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+// 3) Construction du thème clair
+$custom-theme: mat.m2-define-light-theme((
+  color: (
+    primary: $custom-primary,
+    accent:  $custom-accent,
+    warn:    $custom-warn,
+  )
+));
+
+// 4) Inclusion des styles Material eux-mêmes
+@include mat.core();
+@include mat.all-component-themes($custom-theme);
+
+
+// ───────────────────────────────────────────────
+// 5) Vos styles globaux, APRES le theming
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background: #ffffff;
+}
