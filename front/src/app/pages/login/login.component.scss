@@ -1,0 +1,69 @@
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  padding: 16px;
+  box-sizing: border-box;
+  position: relative;
+  text-align: center;
+
+  .login-header {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+  }
+
+  .logo {
+    max-width: 60%;
+    margin-top: 48px;
+    margin-bottom: 24px;
+
+  }
+
+  h1 {
+    margin-bottom: 32px;
+    font-size: 1.6rem;
+    color: rgba(0, 0, 0, 0.8);
+  }
+
+  .login-form {
+    width: 100%;
+    max-width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .full-width {
+      width: 100%;
+    }
+
+    .login-button {
+      border-radius: 6px;
+      color: black;
+      border-color: black;
+      background-color: white;
+      min-height: 40px;
+      font-size: 1rem;
+    }
+  }
+}
+
+/* Responsive, si besoin de réduire encore sur très petit écran */
+@media (max-width: 360px) {
+  .login-container {
+    padding: 8px;
+
+    .logo {
+      max-width: 80%;
+    }
+
+    .login-form {
+      max-width: 100%;
+
+      .login-button {
+        width: 100%;
+      }
+    }
+  }
+}

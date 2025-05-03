@@ -1,0 +1,27 @@
+<mat-toolbar class="app-header">
+  <!-- bouton retour si on n'est pas sur la home -->
+  <button
+    *ngIf="location.path() !== '/'"
+    mat-icon-button
+    routerLink="/"
+    aria-label="Retour"
+  >
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+
+  <!-- logo centré -->
+  <img
+    ngSrc="assets/logo_p6.png"
+    alt="Logo MDD"
+    class="header-logo"
+    width="120"
+    height="auto"
+    priority
+  />
+
+  <!-- espace flexible pour coller le logo au centre -->
+  <span class="spacer"></span>
+
+  <!-- ici tu pourras ajouter tes liens nav / icône profil -->
+  <!-- <button mat-icon-button routerLink="/profile"><mat-icon>account_circle</mat-icon></button> -->
+</mat-toolbar>

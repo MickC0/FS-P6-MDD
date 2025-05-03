@@ -1,12 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {NgOptimizedImage} from "@angular/common";
 import {MatButton} from "@angular/material/button";
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-home',
   imports: [
     NgOptimizedImage,
-    MatButton
+    MatButton,
+    RouterLink
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
