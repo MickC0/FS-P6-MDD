@@ -1,0 +1,53 @@
+.app-header {
+  background: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+}
+
+.header-logo-wrapper {
+  position: relative;      /* nécessaire pour fill */
+  width: 56px;             /* 32px de haut × (695/401) ≃ 55px → arrondi à 56 */
+  height: 32px;            /* hauteur exacte voulue */
+  margin-right: 8px;
+  flex-shrink: 0;          /* ne pas rétrécir dans la toolbar */
+}
+
+.header-logo {
+  object-fit: contain;     /* conserve le ratio et ne recadre pas */
+  object-position: left center;
+}
+
+
+
+
+.flex-spacer {
+  flex: 1 1 auto;
+}
+
+/* liens desktop */
+.desktop-nav, .nav-link {
+  font-weight: 500;
+  color: #000000;
+}
+
+.logout {
+  color: #D32F2F; /* rouge */
+  font-weight: 500;
+}
+
+/* override bouton primaire Angular Material si besoin */
+button.mat-button {
+  min-width: 0;
+  padding: 0 12px;
+}
+
+/* mobile : masquer les liens inline */
+@media (max-width: 600px) {
+  .nav-link,
+  .logout {
+    display: none;
+  }
+}

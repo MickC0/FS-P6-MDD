@@ -1,0 +1,66 @@
+<mat-toolbar class="app-header">
+  <!-- Logo toujours visible -->
+  <div class="header-logo-wrapper">
+    <img
+      ngSrc="assets/logo_p6.png"
+      alt="Logo MDD"
+      class="header-logo"
+      priority
+      fill
+    />
+  </div>
+
+
+  <!-- Nav + menus uniquement si on est connecté ET pas sur login/register -->
+  <ng-container *ngIf="isLoggedInAndNav$ | async">
+    <span class="flex-spacer"></span>
+
+    <!-- version mobile -->
+    <ng-container *ngIf="isHandset$ | async; else desktopNav">
+      <button mat-icon-button [matMenuTriggerFor]="mobileMenu">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <mat-menu #mobileMenu="matMenu" yPosition="below" xPosition="before">
+        <button mat-menu-item (click)="logout()" class="logout">
+          Se déconnecter
+        </button>
+        <mat-divider></mat-divider>
+        <button
+          mat-menu-item
+          *ngFor="let link of navLinks"
+          [routerLink]="link.path"
+        >
+          {{ link.label }}
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item routerLink="/profile">
+          <mat-icon>account_circle</mat-icon>
+          Profil
+        </button>
+      </mat-menu>
+    </ng-container>
+
+    <!-- version desktop -->
+    <ng-template #desktopNav>
+      <button mat-button (click)="logout()" class="logout">
+        Se déconnecter
+      </button>
+      <button
+        mat-button
+        *ngFor="let link of navLinks"
+        [routerLink]="link.path"
+        class="nav-link"
+      >
+        {{ link.label }}
+      </button>
+
+      <button mat-icon-button [matMenuTriggerFor]="profileMenu">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+      <mat-menu #profileMenu="matMenu">
+        <button mat-menu-item routerLink="/profile">Profil</button>
+        <button mat-menu-item (click)="logout()">Se déconnecter</button>
+      </mat-menu>
+    </ng-template>
+  </ng-container>
+</mat-toolbar>
