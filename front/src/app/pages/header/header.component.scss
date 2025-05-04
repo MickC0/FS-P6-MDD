@@ -9,8 +9,8 @@
 
 .header-logo-wrapper {
   position: relative;      /* nécessaire pour fill */
-  width: 56px;             /* 32px de haut × (695/401) ≃ 55px → arrondi à 56 */
-  height: 32px;            /* hauteur exacte voulue */
+  width: 104px;             /* 32px de haut × (695/401) ≃ 55px → arrondi à 56 */
+  height: 60px;            /* hauteur exacte voulue */
   margin-right: 8px;
   flex-shrink: 0;          /* ne pas rétrécir dans la toolbar */
 }
@@ -19,9 +19,6 @@
   object-fit: contain;     /* conserve le ratio et ne recadre pas */
   object-position: left center;
 }
-
-
-
 
 .flex-spacer {
   flex: 1 1 auto;
