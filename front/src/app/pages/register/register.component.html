@@ -1,43 +1,26 @@
-<div class="login-page">
-  <!-- flèche au même emplacement que sur login -->
-  <button mat-icon-button class="back-btn" (click)="goBack()" aria-label="Retour">
-    <mat-icon>arrow_back</mat-icon>
-  </button>
+<app-auth-page title="Inscription">
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Nom d’utilisateur</mat-label>
+    <input matInput [(ngModel)]="model.username" />
+  </mat-form-field>
 
-  <div class="login-container">
-    <h2>Inscription</h2>
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Adresse e-mail</mat-label>
+    <input matInput type="email" [(ngModel)]="model.email" />
+  </mat-form-field>
 
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Nom d’utilisateur</mat-label>
-      <input matInput [(ngModel)]="model.username" />
-    </mat-form-field>
-
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Adresse e-mail</mat-label>
-      <input matInput type="email" [(ngModel)]="model.email" />
-    </mat-form-field>
-
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Mot de passe</mat-label>
-      <input
-        matInput
-        [type]="hide ? 'password' : 'text'"
-        [(ngModel)]="model.password" />
-      <button
-        mat-icon-button
-        matSuffix
-        (click)="hide = !hide"
-        [attr.aria-label]="hide ? 'Afficher le mot de passe' : 'Masquer le mot de passe'">
-        <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
-      </button>
-    </mat-form-field>
-
-    <button
-      mat-flat-button
-      color="primary"
-      class="login-btn"
-      (click)="onRegister()">
-      S’inscrire
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Mot de passe</mat-label>
+    <input
+      matInput
+      [type]="hide ? 'password' : 'text'"
+      [(ngModel)]="model.password" />
+    <button mat-icon-button matSuffix (click)="hide = !hide">
+      <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
     </button>
-  </div>
-</div>
+  </mat-form-field>
+
+  <button mat-flat-button class="auth-btn" (click)="onRegister()">
+    S’inscrire
+  </button>
+</app-auth-page>

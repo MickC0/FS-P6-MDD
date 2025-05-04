@@ -1,43 +1,33 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import {Location, NgOptimizedImage} from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { Component }        from '@angular/core';
+import { Router }           from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule }      from '@angular/material/input';
-import { MatButtonModule }     from '@angular/material/button';
-import { MatIconModule }       from '@angular/material/icon';
+import { MatInputModule }     from '@angular/material/input';
+import { MatIconModule }      from '@angular/material/icon';
+import { MatButtonModule }    from '@angular/material/button';
+import {AuthPageComponent} from '../authpage/authpage.component';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
     FormsModule,
+    AuthPageComponent,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule,
     MatIconModule,
-    NgOptimizedImage,
+    MatButtonModule,
   ],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
   hide = true;
   credentials = { username: '', password: '' };
 
-  constructor(
-    private location: Location,
-    private router: Router
-  ) {}
-
-  goBack() {
-    this.location.back();
-  }
+  constructor(private router: Router) {}
 
   onLogin() {
-    // TODO: appeler votre service d’authentification
-    console.log('Connexion avec', this.credentials);
-    // par exemple, rediriger vers l’accueil
+    // TODO: service d’authentification
     this.router.navigate(['/']);
   }
 }

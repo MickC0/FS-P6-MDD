@@ -40,3 +40,23 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
   background: #ffffff;
 }
+
+.full-width {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.auth-btn {
+  background-color: #7763C5 !important;
+  color: #fff !important;
+  border-radius: 8px !important;
+  height: 40px !important;
+  line-height: 40px;
+  padding: 0 24px !important;
+  width: auto !important;
+  min-width: 120px;
+  display: block;
+  margin: 16px auto 0;
+  font-size: 1rem;
+}
+
