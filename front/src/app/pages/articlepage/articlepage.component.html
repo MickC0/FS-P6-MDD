@@ -1,0 +1,44 @@
+<div class="articlepage">
+  <div class="actions-bar">
+    <button mat-flat-button color="primary" (click)="createArticle()">
+      <mat-icon>create</mat-icon>
+      Créer un article
+    </button>
+
+    <mat-form-field appearance="outline" class="sort-field">
+      <mat-label>Trier par</mat-label>
+      <mat-select [(ngModel)]="selectedSort" (selectionChange)="onSortChange($event.value)">
+        <mat-option *ngFor="let o of sortOptions" [value]="o.value">
+          {{ o.viewValue }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="cards-grid">
+    <mat-card
+      *ngFor="let art of articles"
+      class="article-card"
+      [class.selected]="art.id === selectedArticleId"
+      (click)="selectArticle(art.id)">
+      <mat-card-header>
+        <mat-card-title>{{ art.title }}</mat-card-title>
+        <mat-card-subtitle>
+          <span>{{ art.date | date:'shortDate' }}</span>
+          &nbsp;|&nbsp;
+          <span class="author">{{ art.author }}</span>
+        </mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        {{ art.content }}
+      </mat-card-content>
+
+      <mat-card-actions align="end">
+        <button mat-icon-button (click)="goToArticle(art.id)">
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
