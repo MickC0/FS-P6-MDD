@@ -1,14 +1,16 @@
 import { Routes } from '@angular/router';
-import {HomeComponent} from './pages/home/home.component';
-import {LoginComponent} from './pages/login/login.component';
-import {RegisterComponent} from './pages/register/register.component';
-import {MeComponent} from './pages/me/me.component';
-import {ArticlepageComponent} from './pages/articlepage/articlepage.component';
+
+import {AuthComponent} from './features/auth/pages/auth/auth.component';
+import {TopicsComponent} from './features/topics/pages/topics/topics.component';
+import {ProfileComponent} from './features/user/pages/profile/profile.component';
+import {LoginComponent} from './features/auth/pages/login/login.component';
+import {RegisterComponent} from './features/auth/pages/register/register.component';
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'login',   component: LoginComponent },
-  { path: 'register',  component: RegisterComponent },
-  { path: 'me', component: MeComponent },
-  { path: 'articles', component: ArticlepageComponent },
+  { path: '', component: AuthComponent },
+  { path: 'login', title: 'Se connecter', component: LoginComponent },
+  { path: 'register', title: "S'inscrire", component: RegisterComponent },
+  { path: 'topics', title: 'Les thèmes', component: TopicsComponent },
+  { path: 'profile', title: 'Mon profil', component: ProfileComponent },
+
 ];
