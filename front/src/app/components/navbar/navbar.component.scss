@@ -1,0 +1,133 @@
+.desktop-nav-container {
+  box-shadow: inset 0 -4px 4px 0 rgba(200, 220, 250, 0.2);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(3px);
+  background: rgba(255, 255, 255, 0.6);
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 2;
+}
+
+.desktop-nav {
+  padding: 0.5rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .logo {
+    height: 4rem;
+  }
+
+  ul {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .toggle-icon {
+    display: none;
+    font-family: "Material Icons", sans-serif;
+    font-weight: normal;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+}
+
+.avatar {
+  border-radius: 50%;
+  height: 2.5rem;
+  width: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid transparent;
+  background-color: rgba(217, 217, 217, 1);
+
+  > mat-icon {
+    font-size: 1.5rem;
+    color: #555;
+  }
+
+  &.active-profile {
+    border-color: #7451eb;
+
+    > mat-icon {
+      color: #7451eb;
+    }
+  }
+}
+
+.navbar-link {
+  text-decoration: none;
+  color: black;
+
+  &.active {
+    font-weight: 700;
+    color: #7451eb;
+  }
+}
+
+aside {
+  display: none;
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  background: transparent;
+  backdrop-filter: blur(0px);
+  justify-content: flex-end;
+  translate: 100% 0;
+  transition: all 0.3s ease-in;
+
+  &.active {
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(3px);
+    translate: 0 0;
+  }
+
+  .mobile-nav {
+    height: 100%;
+    width: 60%;
+    background: white;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 2rem;
+    text-align: end;
+    font-size: 1.25rem;
+    translate: 100% 0;
+    transition: all 0.2s ease-in-out 0.2s;
+
+    &.active {
+      translate: 0 0;
+    }
+  }
+
+  li {
+    margin-bottom: 1rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .desktop-nav {
+    .toggle-icon {
+      display: block;
+    }
+
+    ul {
+      display: none;
+    }
+  }
+
+  aside {
+    display: flex;
+  }
+}

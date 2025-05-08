@@ -1,13 +1,9 @@
-// ───────────────────────────────────────────────
-// 1) TOUT en-tête @use/@forward avant toute règle
 @use '@angular/material' as mat;
 
-// 2) Définition de vos palettes
 $custom-primary: mat.m2-define-palette(mat.$m2-deep-purple-palette, 500, 300, 700);
 $custom-accent:  mat.m2-define-palette(mat.$m2-purple-palette, A200, A100, A400);
 $custom-warn:    mat.m2-define-palette(mat.$m2-red-palette);
 
-// 3) Construction du thème clair
 $custom-theme: mat.m2-define-light-theme((
   color: (
     primary: $custom-primary,
@@ -16,13 +12,9 @@ $custom-theme: mat.m2-define-light-theme((
   )
 ));
 
-// 4) Inclusion des styles Material eux-mêmes
 @include mat.core();
 @include mat.all-component-themes($custom-theme);
 
-
-// ───────────────────────────────────────────────
-// 5) Vos styles globaux, APRES le theming
 html, body {
   margin: 0;
   padding: 0;
@@ -34,29 +26,26 @@ html, body {
   box-sizing: inherit;
 }
 
-
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   background: #ffffff;
 }
 
-.full-width {
-  width: 100%;
-  margin-bottom: 20px;
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
-.auth-btn {
-  background-color: #7763C5 !important;
-  color: #fff !important;
-  border-radius: 8px !important;
-  height: 40px !important;
-  line-height: 40px;
-  padding: 0 24px !important;
-  width: auto !important;
-  min-width: 120px;
-  display: block;
-  margin: 16px auto 0;
-  font-size: 1rem;
+li {
+  list-style-type: none;
 }
+
+article {
+  background-color: rgba(245, 245, 245, 1);
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+
 

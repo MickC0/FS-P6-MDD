@@ -1,0 +1,63 @@
+<nav class="desktop-nav-container">
+  <div class="desktop-nav">
+    <a routerLink="/feed">
+      <img
+        class="logo"
+        ngSrc="/assets/logo_p6.png"
+        alt="logo"
+        aria-labelledby="Monde de dev"
+        height="401" width="695"/>
+    </a>
+
+    <ul>
+      <li>
+        <a routerLink="/feed" class="navbar-link" routerLinkActive="active"
+        >Articles</a
+        >
+      </li>
+      <li>
+        <a routerLink="/topics" class="navbar-link" routerLinkActive="active"
+        >Thèmes</a
+        >
+      </li>
+      <li>
+        <a
+          alt="avatar"
+          routerLink="/profile"
+          routerLinkActive="active-profile"
+          class="avatar"
+        >
+          <mat-icon>person</mat-icon>
+        </a>
+      </li>
+    </ul>
+
+    <span class="toggle-icon" (click)="toggleMenu()">menu</span>
+  </div>
+</nav>
+
+<!-- mobile menu -->
+<aside [ngClass]="{ active: isMenuOpen }" (click)="toggleMenu()">
+  <nav class="mobile-nav" [ngClass]="{ active: isMenuOpen }">
+    <ul>
+      <li>
+        <a routerLink="/posts" class="navbar-link" routerLinkActive="active"
+        >Articles</a
+        >
+      </li>
+      <li>
+        <a routerLink="/topics" class="navbar-link" routerLinkActive="active"
+        >Thèmes</a
+        >
+      </li>
+    </ul>
+    <a
+      alt="avatar"
+      routerLink="/profile"
+      routerLinkActive="active-profile"
+      class="avatar"
+    >
+      <mat-icon>person</mat-icon>
+    </a>
+  </nav>
+</aside>
