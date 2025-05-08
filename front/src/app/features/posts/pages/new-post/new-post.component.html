@@ -1,0 +1,48 @@
+<app-nav-layout>
+  <div class="new-post-top-layout">
+    <div class="arrow-back">
+      <app-back-arrow></app-back-arrow>
+    </div>
+    <h1>Créer un nouvel article</h1>
+  </div>
+
+  <form class="new-post-form" [formGroup]="newPostForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <mat-label>Sélectionner un thème</mat-label>
+      <mat-select formControlName="topic">
+        <mat-option *ngFor="let topic of allTopics" [value]="topic.id">
+          {{ topic.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Titre de l'article</mat-label>
+      <input
+        matInput
+        placeholder="Titre de l'article"
+        formControlName="title"
+        maxlength="100"
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Contenu de l'article</mat-label>
+      <textarea
+        matInput
+        placeholder="Contenu de l'article"
+        maxlength="550"
+        formControlName="content"
+      ></textarea>
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="newPostForm.invalid"
+    >
+      Créer
+    </button>
+  </form>
+</app-nav-layout>

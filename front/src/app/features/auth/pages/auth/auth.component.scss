@@ -4,7 +4,7 @@ main {
   place-items: center;
   justify-content: center;
   min-height: 100vh;
-  max-width: 500px;
+  max-width: 800px;
   margin: auto;
 }
 
@@ -12,12 +12,40 @@ main {
   width: 100%;
   margin: 2rem;
   max-width: 500px;
+  height: auto;
 }
 
-.buttons {
+.auth-actions {
   display: flex;
   gap: 3rem;
-  margin-bottom: 3rem;
-  justify-content: center;
+  margin-top: 3rem;
+  justify-content: space-evenly;
   width: 100%;
+
+  button {
+    background: transparent !important;
+    color: #000 !important;
+    border: 1px solid #000 !important;
+    box-shadow: none !important;
+
+    border-radius: 8px !important;
+    min-width: 120px;
+    height: 40px;
+    padding: 0 16px !important;
+    font-weight: 500;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .auth-actions {
+    gap: 3rem;
+    margin-top: 3rem;
+  }
+
+  .auth-actions button {
+    min-width: 140px;
+    height: 48px;
+    font-size: 1.6rem;
+    padding: 0 24px !important;
+  }
 }

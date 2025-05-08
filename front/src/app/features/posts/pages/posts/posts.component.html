@@ -1,0 +1,40 @@
+<app-nav-layout>
+  <div class="posts-top-layout">
+    <button mat-raised-button color="primary" routerLink="/create-post">
+      Créer un article
+    </button>
+
+    <button mat-button [matMenuTriggerFor]="menu">
+      <p class="sort-label">Trier par <span class="sort-icon">sort</span></p>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="sortPosts('date')">Date (+ récent)</button>
+      <button mat-menu-item (click)="sortPosts('date_reverse')">
+        Date (+ ancien)
+      </button>
+      <button mat-menu-item (click)="sortPosts('title')">Titre</button>
+      <button mat-menu-item (click)="sortPosts('author')">Auteur</button>
+    </mat-menu>
+  </div>
+
+  <app-grid-layout
+    class="posts-feed"
+    *ngIf="posts && posts.length > 0; else noPosts"
+  >
+    <app-post-card *ngFor="let post of posts" [post]="post"></app-post-card>
+  </app-grid-layout>
+
+  <ng-template #noPosts>
+    <article class="no-posts">
+      <h2>Bienvenue !</h2>
+      <p>
+        Il semble que ton fil d'actualité soit encore vide.
+        <strong>Abonne-toi à des thèmes</strong> pour commencer à voir des
+        articles qui pourrait t'intéresser.
+      </p>
+      <button mat-raised-button color="primary" routerLink="/topics">
+        Explorer les thèmes
+      </button>
+    </article>
+  </ng-template>
+</app-nav-layout>

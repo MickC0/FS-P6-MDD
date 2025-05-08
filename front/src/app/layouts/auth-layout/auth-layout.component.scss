@@ -5,6 +5,7 @@
 
   img {
     height: 80px;
+    width: auto;
   }
 }
 
@@ -49,4 +50,32 @@ hgroup {
   font-size: 2rem;
   position: absolute;
   top: 1.5rem;
+}
+@media screen and (min-width: 768px) {
+  main {
+    /* occupe tout l’espace restant sous le header */
+    min-height: calc(100vh - 64px);
+    /* centre verticalement */
+    justify-content: center;
+    padding: 2rem 0;
+  }
+
+  .logo-top img {
+    /* augmente un peu le logo sur plus grand écran */
+    height: 120px;
+  }
+
+  /* espace plus grand entre les deux boutons */
+  .auth-actions {
+    gap: 2rem;   /* plutôt 32px */
+    margin-top: 3rem;
+  }
+
+  /* boutons plus grands pour tablettes */
+  .auth-actions button {
+    min-width: 140px;
+    height: 48px;
+    font-size: 1rem;
+    padding: 0 24px !important;
+  }
 }

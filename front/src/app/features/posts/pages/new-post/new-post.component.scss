@@ -1,0 +1,31 @@
+.new-post-top-layout {
+  position: relative;
+
+  h1 {
+    text-align: center;
+  }
+
+  .arrow-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+
+  button {
+    display: block;
+    margin: auto;
+  }
+
+  textarea {
+    resize: vertical;
+  }
+}

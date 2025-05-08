@@ -9,6 +9,7 @@ import {TopicsService} from '../../services/topics.service';
 
 @Component({
   selector: 'app-topic-card',
+  standalone: true,
   imports: [
     MatButton,
     NgIf

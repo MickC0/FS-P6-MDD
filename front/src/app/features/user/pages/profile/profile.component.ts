@@ -1,17 +1,40 @@
 import { Component } from '@angular/core';
-import {SessionService} from '../../../auth/services/session.service';
-import {AuthService} from '../../../auth/services/auth.service';
+import { Topic } from '../../../topics/interfaces/Topic.interface';
+import { SessionService } from '../../../auth/services/session.service';
+import { AuthService } from '../../../auth/services/auth.service';
 import { Router } from '@angular/router';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {take} from 'rxjs';
-import {User} from '../../interfaces/User.interface';
-import {UpdateRequest} from '../../interfaces/UpdateRequest.interface';
-import {AuthSuccess} from '../../../auth/interfaces/AuthSuccess';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import { take } from 'rxjs';
+import { User } from '../../interfaces/User.interface';
+import { UpdateRequest } from '../../interfaces/UpdateRequest.interface';
+import { AuthSuccess } from '../../../auth/interfaces/AuthSuccess';
+import {MatFormField, MatInput, MatLabel, MatSuffix} from '@angular/material/input';
+import {NavLayoutComponent} from '../../../../layouts/nav-layout/nav-layout.component';
+import {MatButton, MatIconButton} from '@angular/material/button';
+import {GridLayoutComponent} from '../../../../layouts/grid-layout/grid-layout.component';
+import {TopicCardComponent} from '../../../topics/components/topic-card/topic-card.component';
+import {NgForOf} from '@angular/common';
+import { MatIconModule } from '@angular/material/icon'
+
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [],
+  imports: [
+    ReactiveFormsModule,
+    MatInput,
+    NavLayoutComponent,
+    MatIconButton,
+    MatButton,
+    GridLayoutComponent,
+    TopicCardComponent,
+    NgForOf,
+    MatSuffix,
+    MatIconModule,
+    MatLabel,
+    MatFormField,
+
+  ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
 })

@@ -1,13 +1,17 @@
 import { Component } from '@angular/core';
-import {MatIcon} from '@angular/material/icon-module.d-BeibE7j0';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 import {NgClass, NgOptimizedImage} from '@angular/common';
+import {MatIconModule} from '@angular/material/icon';
+import {ReactiveFormsModule} from '@angular/forms';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
   imports: [
-    MatIcon,
+    MatIconModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
     RouterLink,
     NgOptimizedImage,
     RouterLinkActive,

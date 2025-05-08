@@ -8,6 +8,7 @@ import {TopicsService} from '../../services/topics.service';
 
 @Component({
   selector: 'app-topics',
+  standalone: true,
   imports: [
     NavLayoutComponent,
     GridLayoutComponent,

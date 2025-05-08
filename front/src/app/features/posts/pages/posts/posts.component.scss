@@ -1,0 +1,25 @@
+.posts-top-layout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.sort-label {
+  display: flex;
+  margin: 0;
+}
+
+.sort-icon {
+  cursor: inherit;
+  font-family: "Material Icons", sans-serif;
+  font-weight: normal;
+  font-size: 1.5rem;
+  margin-left: 0.5rem;
+}
+
+.no-posts {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}

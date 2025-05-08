@@ -1,0 +1,50 @@
+<app-nav-layout *ngIf="post">
+  <div class="post-title">
+    <app-back-arrow></app-back-arrow>
+    <h1>{{ post.title }}</h1>
+  </div>
+  <section class="post">
+    <div class="post-info">
+      <time>{{ post.createdAt | date : "MMMM d, y, h:mm a" }}</time>
+      <cite>{{ post.author_name }}</cite>
+      <div class="topics">
+        <span>{{ post.topic_name }}</span>
+      </div>
+    </div>
+    <p>{{ post.content }}</p>
+  </section>
+
+  <hr />
+
+  <section class="comments">
+    <h2>Commentaires</h2>
+
+    <div *ngFor="let comment of comments" class="comment">
+      <span>{{ comment.author_name }}</span>
+      <p class="comment-message">{{ comment.content }}</p>
+    </div>
+
+    <form
+      class="comment-form"
+      (ngSubmit)="onSubmit()"
+      [formGroup]="commentForm"
+    >
+      <mat-form-field class="example-full-width">
+        <textarea
+          matInput
+          placeholder="Leave a comment"
+          formControlName="message"
+        ></textarea>
+      </mat-form-field>
+
+      <button
+        mat-icon-button
+        color="primary"
+        aria-label="Example icon button with a open in new tab icon"
+        [disabled]="!commentForm.valid"
+      >
+        <mat-icon>send</mat-icon>
+      </button>
+    </form>
+  </section>
+</app-nav-layout>
