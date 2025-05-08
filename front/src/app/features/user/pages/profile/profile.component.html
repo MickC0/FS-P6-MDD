@@ -1,0 +1,118 @@
+<app-nav-layout>
+  <h1>Profil utilisateur</h1>
+
+  <form
+    class="profile-update-form"
+    [formGroup]="profileForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <mat-form-field class="form-field">
+      <mat-label>Username</mat-label>
+      <input
+        matInput
+        type="text"
+        placeholder="Username"
+        formControlName="name"
+      />
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <mat-label>email</mat-label>
+      <input
+        matInput
+        type="email"
+        placeholder="Your email"
+        formControlName="email"
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+        matInput
+        [type]="showOldPassword ? 'password' : 'text'"
+        placeholder="Your current password"
+        formControlName="oldPassword"
+      />
+      <button
+        type="button"
+        mat-icon-button
+        matSuffix
+        (click)="showOldPassword = !showOldPassword"
+        [attr.aria-label]="'Masquer'"
+        [attr.aria-pressed]="showOldPassword"
+      >
+        <mat-icon>{{
+            showOldPassword ? "visibility_off" : "visibility"
+          }}</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <mat-form-field class="form-field" fxFlex>
+      <mat-label>New Password ?</mat-label>
+      <input
+        matInput
+        type="{{ showPassword ? 'text' : 'password' }}"
+        placeholder="Enter your new password"
+        formControlName="password"
+      />
+
+      <button
+        type="button"
+        mat-icon-button
+        matSuffix
+        (click)="showPassword = !showPassword"
+        [attr.aria-label]="'Masquer'"
+        [attr.aria-pressed]="showPassword"
+      >
+        <mat-icon>{{
+            showPassword ? "visibility_off" : "visibility"
+          }}</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <mat-form-field class="form-field" fxFlex>
+      <mat-label>New Password confirmation</mat-label>
+      <input
+        matInput
+        type="{{ showPasswordConfirmation ? 'text' : 'password' }}"
+        placeholder="Confirm your new password"
+        formControlName="password2"
+      />
+
+      <button
+        type="button"
+        mat-icon-button
+        matSuffix
+        (click)="showPasswordConfirmation = !showPasswordConfirmation"
+        [attr.aria-label]="'Masquer'"
+        [attr.aria-pressed]="showPasswordConfirmation"
+      >
+        <mat-icon>{{
+            showPassword ? "visibility_off" : "visibility"
+          }}</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="!profileForm.valid"
+      (click)="onSubmit()"
+    >
+      Sauvegarder
+    </button>
+
+    <button mat-button color="warn" (click)="logout()">Se déconnecter</button>
+  </form>
+  <hr />
+  <h2>Abonnements</h2>
+
+  <app-grid-layout class="subscriptions-list">
+    <app-topic-card
+      [topic]="topic"
+      *ngFor="let topic of userSubscriptions"
+    ></app-topic-card>
+  </app-grid-layout>
+</app-nav-layout>
+<p>profile works!</p>

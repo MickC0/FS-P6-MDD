@@ -1,0 +1,23 @@
+main {
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  max-width: 500px;
+  margin: auto;
+}
+
+.logo {
+  width: 100%;
+  margin: 2rem;
+  max-width: 500px;
+}
+
+.buttons {
+  display: flex;
+  gap: 3rem;
+  margin-bottom: 3rem;
+  justify-content: center;
+  width: 100%;
+}

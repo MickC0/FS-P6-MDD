@@ -1,0 +1,105 @@
+<app-auth-layout title="S'inscrire">
+  <form
+    class="register-form"
+    [formGroup]="registerForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <mat-form-field class="form-field">
+      <mat-label>Username</mat-label>
+      <input
+        matInput
+        type="text"
+        placeholder="Enter your username"
+        value=""
+        formControlName="name"
+      />
+
+      @if (registerForm.get('name')?.errors?.['minlength']) {
+        <mat-error>Username must be at least 4 characters long.</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <mat-label>Email</mat-label>
+      <input
+        matInput
+        type="text"
+        placeholder="Enter your email"
+        value=""
+        formControlName="email"
+      />
+
+      @if (registerForm.get('email')?.errors?.['email']) {
+        <mat-error
+        >Invalid email format. Please enter a valid email (eg:
+          <i>mondededev&#64;mail.com</i>).</mat-error
+        >
+      }
+    </mat-form-field>
+
+    <mat-form-field class="form-field" fxFlex>
+      <mat-label>Password</mat-label>
+      <input
+        matInput
+        type="{{ showPassword ? 'text' : 'password' }}"
+        placeholder="Enter your password"
+        formControlName="password"
+        value=""
+      />
+      <button
+        type="button"
+        mat-icon-button
+        matSuffix
+        (click)="showPassword = !showPassword"
+        [attr.aria-label]="'Masquer'"
+        [attr.aria-pressed]="showPassword"
+      >
+        <mat-icon>{{
+            showPassword ? "visibility_off" : "visibility"
+          }}</mat-icon>
+      </button>
+
+      @if (registerForm.get('password')?.errors?.['pattern']) {
+        <mat-error>Password must be at least 8 characters long.</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field class="form-field" fxFlex>
+      <mat-label>Confirm your password</mat-label>
+      <input
+        matInput
+        type="{{ showPasswordConfirmation ? 'text' : 'password' }}"
+        placeholder="Confirm your password"
+        formControlName="passwordConfirm"
+        value=""
+      />
+
+      <button
+        type="button"
+        mat-icon-button
+        matSuffix
+        (click)="showPasswordConfirmation = !showPasswordConfirmation"
+        [attr.aria-label]="'Masquer'"
+        [attr.aria-pressed]="showPasswordConfirmation"
+      >
+        <mat-icon>{{
+            showPasswordConfirmation ? "visibility_off" : "visibility"
+          }}</mat-icon>
+      </button>
+
+      @if (registerForm.errors?.['notMatching'] &&
+      registerForm.get('passwordConfirm')?.touched) {
+        <mat-error>Passwords do not match</mat-error>
+      }
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]="registerForm.invalid"
+      type="submit"
+    >
+      S'inscrire
+    </button>
+  </form>
+</app-auth-layout>
