@@ -1,0 +1,23 @@
+<article class="topic-card">
+  <h2>{{ topic.name }}</h2>
+
+  <p>{{ topic.description }}</p>
+
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="subscribeToTopic(topic)"
+    *ngIf="!hasSubscribed(topic)"
+  >
+    S'abonner
+  </button>
+
+  <button
+    mat-raised-button
+    color="warn"
+    *ngIf="hasSubscribed(topic)"
+    (click)="unsubscribeFromTopic(topic)"
+  >
+    Se désabonner
+  </button>
+</article>
