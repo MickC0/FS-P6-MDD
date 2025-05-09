@@ -1,32 +1,17 @@
 <nav class="desktop-nav-container">
   <div class="desktop-nav">
     <a routerLink="/feed">
-      <img
-        class="logo"
-        ngSrc="/assets/logo_p6.png"
-        alt="logo"
-        aria-labelledby="Monde de dev"
-        height="401" width="695"/>
+      <img class="logo" ngSrc="/assets/logo_p6.png" alt="logo" aria-labelledby="Monde de dev" height="401" width="695" priority/>
     </a>
-
     <ul>
       <li>
-        <a routerLink="/feed" class="navbar-link" routerLinkActive="active"
-        >Articles</a
-        >
+        <a routerLink="/feed" class="navbar-link" routerLinkActive="active">Articles</a>
       </li>
       <li>
-        <a routerLink="/topics" class="navbar-link" routerLinkActive="active"
-        >Thèmes</a
-        >
+        <a routerLink="/topics" class="navbar-link" routerLinkActive="active">Thèmes</a>
       </li>
       <li>
-        <a
-          alt="avatar"
-          routerLink="/profile"
-          routerLinkActive="active-profile"
-          class="avatar"
-        >
+        <a alt="avatar" routerLink="/profile" routerLinkActive="active-profile" class="avatar">
           <mat-icon>person</mat-icon>
         </a>
       </li>
@@ -41,22 +26,13 @@
   <nav class="mobile-nav" [ngClass]="{ active: isMenuOpen }">
     <ul>
       <li>
-        <a routerLink="/posts" class="navbar-link" routerLinkActive="active"
-        >Articles</a
-        >
+        <a routerLink="/posts" class="navbar-link" routerLinkActive="active">Articles</a>
       </li>
       <li>
-        <a routerLink="/topics" class="navbar-link" routerLinkActive="active"
-        >Thèmes</a
-        >
+        <a routerLink="/topics" class="navbar-link" routerLinkActive="active">Thèmes</a>
       </li>
     </ul>
-    <a
-      alt="avatar"
-      routerLink="/profile"
-      routerLinkActive="active-profile"
-      class="avatar"
-    >
+    <a alt="avatar" routerLink="/profile" routerLinkActive="active-profile" class="avatar">
       <mat-icon>person</mat-icon>
     </a>
   </nav>
