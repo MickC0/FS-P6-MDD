@@ -97,4 +97,10 @@ public class UserServiceImpl implements UserService {
         UserEntity saved = repository.save(u);
         return mapper.toDto(saved);
     }
+
+    @Override
+    public UserEntity getUserEntityById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Utilisateur non trouvé avec l'id " + id));
+    }
 }

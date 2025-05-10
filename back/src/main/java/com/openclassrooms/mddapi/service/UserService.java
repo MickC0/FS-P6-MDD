@@ -30,4 +30,5 @@ public interface UserService extends UserDetailsService {
 
 
     UserDto updateSubscriptions(String username, Set<TopicEntity> subscriptions);
+    UserEntity getUserEntityById(Long id) throws EntityNotFoundException;
 }
