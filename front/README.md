@@ -1,59 +1,69 @@
-# Front
+# MDD Frontend Setup Guide
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.7.
+Ce guide explique comment installer, configurer et lancer l’application frontend Angular de MDD (Monde de Dév).
 
-## Development server
+---
 
-To start a local development server, run:
+## 🚀 À propos du projet
 
-```bash
-ng serve
+MDD est un réseau social pour développeurs, permettant de :
+- S’abonner à des topics (JavaScript, Java, Python, Web3, …)
+- Consulter un fil d’actualité personnalisé
+- Rédiger des articles (posts)
+- Commenter les articles de la communauté
+
+Le frontend Angular se connecte à l’API Spring Boot (port `3002`, contexte `/api`).
+
+---
+
+## 🛠 Tech Stack
+
+| Outil                   | Version / Détails                |
+|-------------------------|----------------------------------|
+| **Framework**           | Angular CLI v19.0.7              |
+| **Langage**             | TypeScript / ES2023              |
+| **Node.js**             | 22.14.0                          |
+| **npm**                 | 11.2.0                           |
+| **UI Library**          | Angular Material                 |
+| **Gestionnaire d’état** | RxJS                             |
+| **Styles globaux**      | SCSS                             |
+
+---
+
+## 📋 Prérequis
+
+Avant de commencer, assurez-vous d’avoir installé :
+- **Node.js** 22.14.0 (`node -v`)
+- **npm** 11.2.0 (`npm -v`)
+- **Angular CLI** 19+ (`npm install -g @angular/cli`)
+- Un **serveur backend** MDD opérationnel sur `http://localhost:3002/api`
+
+---
+
+## 🔧 Installation & Configuration
+
+#### 1️⃣ Clone the Project
+```sh
+git clone <repository_url>
+cd front
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+#### 1️⃣ Installation des dépendances
+```sh
+npm install
+```
+## ▶️ Lancement en mode développement
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+```sh
+npm run start
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## 📦 Compilation & déploiement
 
-```bash
-ng generate --help
+```sh
+npm run build
 ```
 
-## Building
+Les artefacts sont générés dans dist/front.
 
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Déployez ce dossier sur votre serveur statique (Nginx, Apache…).

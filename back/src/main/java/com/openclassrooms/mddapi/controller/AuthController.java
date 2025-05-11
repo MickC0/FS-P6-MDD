@@ -8,6 +8,9 @@ import com.openclassrooms.mddapi.security.JwtService;
 import com.openclassrooms.mddapi.service.UserService;
 
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+@Tag(name = "Authentication", description = "Endpoints for user registration, login and profile management")
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -41,11 +45,15 @@ public class AuthController {
         this.authManager = authManager;
     }
 
-    @GetMapping("/welcome")
-    public String welcome() {
-        return "Welcome this endpoint is not secure";
-    }
 
+    @Operation(
+            summary = "Register a new user",
+            description = "Creates a new user account and immediately authenticates, returning a JWT.",
+            responses = {
+                    @ApiResponse(responseCode = "201", description = "User registered and JWT returned"),
+                    @ApiResponse(responseCode = "400", description = "Invalid registration data")
+            }
+    )
     @PostMapping("/register")
     public ResponseEntity<Map<String,String>> register(
             @Valid @RequestBody CreateUserRequest request
@@ -66,6 +74,14 @@ public class AuthController {
                 .body(Map.of(TOKEN, jwt));
     }
 
+    @Operation(
+            summary = "User login",
+            description = "Authenticates a user and returns a JWT for subsequent requests.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Authentication successful, JWT returned"),
+                    @ApiResponse(responseCode = "400", description = "Invalid email or password")
+            }
+    )
     @PostMapping("/login")
     public ResponseEntity<Map<String,String>> login(
             @Valid @RequestBody AuthRequest authRequest
@@ -84,6 +100,14 @@ public class AuthController {
         }
     }
 
+    @Operation(
+            summary = "Get current user profile",
+            description = "Returns the profile of the authenticated user.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "User profile returned"),
+                    @ApiResponse(responseCode = "403", description = "Authentication required")
+            }
+    )
     @GetMapping("/me")
     public ResponseEntity<UserDto> me(
             Authentication auth
@@ -93,6 +117,16 @@ public class AuthController {
         return ResponseEntity.ok(profile);
     }
 
+
+    @Operation(
+            summary = "Modify current user profile",
+            description = "Updates the authenticated user's profile data and returns a refreshed JWT.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Profile updated and new JWT returned"),
+                    @ApiResponse(responseCode = "400", description = "Invalid update data"),
+                    @ApiResponse(responseCode = "403", description = "Authentication required")
+            }
+    )
     @PutMapping("/me")
     public ResponseEntity<Map<String,String>> modify(
             Authentication auth,

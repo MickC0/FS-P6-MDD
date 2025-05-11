@@ -9,6 +9,7 @@ import com.openclassrooms.mddapi.service.PostService;
 import com.openclassrooms.mddapi.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Tag(
+        name        = "Users",
+        description = "Endpoints for retrieving user profiles and their subscribed posts"
+)
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -38,10 +43,15 @@ public class UserController {
         this.postService = postService;
     }
 
-    @Operation(summary = "gets personal data from user by id", responses = {
-            @ApiResponse(responseCode = "200", description = "Personal data is displayed"),
-            @ApiResponse(responseCode = "403", description = "Access unauthorized")
-    })
+    @Operation(
+            summary     = "Get user by ID",
+            description = "Retrieves personal data for the user identified by the given ID. Requires ROLE_USER.",
+            responses   = {
+                    @ApiResponse(responseCode = "200", description = "User profile returned"),
+                    @ApiResponse(responseCode = "400", description = "Invalid user ID supplied"),
+                    @ApiResponse(responseCode = "403", description = "Access denied")
+            }
+    )
     @GetMapping("/{id}")
     @Secured("ROLE_USER")
     public UserDto getUserById(@PathVariable("id") long id) throws EntityNotFoundException {
@@ -49,10 +59,15 @@ public class UserController {
         return userMapper.toDto(userEntity);
     }
 
-    @Operation(summary = "get all posts to which user has subscribed", responses = {
-            @ApiResponse(responseCode = "200", description = "Your posts are displayed"),
-            @ApiResponse(responseCode = "403", description = "Access unauthorized")
-    })
+    @Operation(
+            summary     = "Get posts from user subscriptions",
+            description = "Lists all posts under the topics to which the specified user is subscribed. Requires ROLE_USER.",
+            responses   = {
+                    @ApiResponse(responseCode = "200", description = "List of subscribed posts returned"),
+                    @ApiResponse(responseCode = "400", description = "Invalid user ID supplied"),
+                    @ApiResponse(responseCode = "403", description = "Access denied")
+            }
+    )
     @GetMapping("/{id}/posts")
     @Secured("ROLE_USER")
     public List<PostDto> getPostsByUserSubscriptions(@PathVariable("id") long id)
