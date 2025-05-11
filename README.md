@@ -76,7 +76,3 @@ Chaque dossier contient son **README.md** dédié avec les instructions d’inst
 *Prêt·e·s à plonger dans le Monde de Dev ?* 🚀
 """
 
-# Write the new README.md
-readme_path = Path('/mnt/data/README.md')
-readme_path.write_text(new_readme, encoding='utf-8')
-
