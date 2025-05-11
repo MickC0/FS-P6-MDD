@@ -13,8 +13,16 @@
 
   <button
     mat-raised-button
-    color="warn"
-    *ngIf="hasSubscribed()"
+    color="accent"
+    *ngIf="hasSubscribed() && disableUnsubscribe"
+    disabled
+  >
+    Déjà abonné
+  </button>
+
+  <button
+    mat-raised-button color="warn"
+    *ngIf="hasSubscribed() && !disableUnsubscribe"
     (click)="unsubscribeFromTopic()"
   >
     Se désabonner

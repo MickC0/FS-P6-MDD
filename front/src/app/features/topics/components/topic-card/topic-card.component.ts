@@ -21,6 +21,7 @@ export class TopicCardComponent {
   @Input()  topic!: Topic;
   @Input()  user?: User;
   @Output() subscriptionChange = new EventEmitter<void>();
+  @Input() disableUnsubscribe = false;
 
   constructor(
     private topicsService: TopicsService,
@@ -55,7 +56,7 @@ export class TopicCardComponent {
   }
 
   unsubscribeFromTopic(): void {
-    if (!this.user) return;
+    if (!this.user || this.disableUnsubscribe) return;
     this.topicsService.unsubscribeTopic(this.topic.id)
       .pipe(take(1))
       .subscribe({

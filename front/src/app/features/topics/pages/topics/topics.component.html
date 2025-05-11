@@ -4,7 +4,8 @@
       *ngFor="let topic of allTopics"
       [topic]="topic"
       [user]="sessionService.user"
-    (subscriptionChange)="onTopicSubscriptionChanged()">
+      [disableUnsubscribe]="true"
+      (subscriptionChange)="onTopicSubscriptionChanged()">
     </app-topic-card>
   </app-grid-layout>
 </app-nav-layout>
