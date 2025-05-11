@@ -74,5 +74,4 @@ Chaque dossier contient son **README.md** dédié avec les instructions d’inst
 ---
 
 *Prêt·e·s à plonger dans le Monde de Dev ?* 🚀
-"""
 
