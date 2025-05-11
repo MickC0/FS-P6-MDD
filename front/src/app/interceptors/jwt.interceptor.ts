@@ -1,17 +1,17 @@
 import {Injectable} from '@angular/core';
 import {HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import {SessionService} from '../features/auth/services/session.service';
 
 @Injectable({ providedIn: 'root' })
 export class JwtInterceptor implements HttpInterceptor {
-  public intercept(request: HttpRequest<any>, next: HttpHandler) {
-    const token = localStorage.getItem('token');
+  constructor(private sessionService: SessionService) {}
+  intercept(req: HttpRequest<any>, next: HttpHandler) {
+    const token = this.sessionService.getToken();
     if (token) {
-      request = request.clone({
-        setHeaders: {
-          Authorization: `Bearer ${token}`,
-        },
+      req = req.clone({
+        setHeaders: { Authorization: `Bearer ${token}` }
       });
     }
-    return next.handle(request);
+    return next.handle(req);
   }
 }

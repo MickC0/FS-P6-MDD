@@ -6,29 +6,27 @@ import {User} from '../../user/interfaces/User.interface';
   providedIn: 'root'
 })
 export class SessionService {
-  public isLogged = false;
-  public user: User | undefined;
-
-  private isLoggedSubject = new BehaviorSubject<boolean>(this.isLogged);
-
-  public $isLogged(): Observable<boolean> {
+  public user?: User;
+  private isLoggedSubject = new BehaviorSubject<boolean>(!!localStorage.getItem('token'));
+  public isLogged$(): Observable<boolean> {
     return this.isLoggedSubject.asObservable();
   }
 
-  public logIn(user: User): void {
+  public logIn(user: User, token?: string): void {
     this.user = user;
-    this.isLogged = true;
-    this.next();
+    if (token) {
+      localStorage.setItem('token', token);
+    }
+    this.isLoggedSubject.next(true);
   }
 
   public logOut(): void {
     localStorage.removeItem('token');
     this.user = undefined;
-    this.isLogged = false;
-    this.next();
+    this.isLoggedSubject.next(false);
   }
 
-  private next(): void {
-    this.isLoggedSubject.next(this.isLogged);
+  public getToken(): string | null {
+    return localStorage.getItem('token');
   }
 }

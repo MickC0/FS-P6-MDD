@@ -10,18 +10,11 @@ export class CommentsService {
 
   constructor(private httpClient: HttpClient) {}
 
-  /**
-   * Create a new comment for a post.
-   *
-   * @param {number} postId - The ID of the post.
-   * @param {string} messageRequest - The content of the comment.
-   * @return {Observable<{ message: string }>} An observable that emits the response from the server.
-   */
   createComment(
     postId: number,
     messageRequest: string
-  ): Observable<{ message: string }> {
-    return this.httpClient.post<{ message: string }>(
+  ): Observable<{ response: string }> {
+    return this.httpClient.post<{ response: string }>(
       `${this.baseUrl}/${postId}/comments`,
       messageRequest
     );

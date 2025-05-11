@@ -5,6 +5,9 @@
     </a>
     <ul>
       <li>
+        <button mat-button color="warn" (click)="logout()">Se déconnecter</button>
+      </li>
+      <li>
         <a routerLink="/feed" class="navbar-link" routerLinkActive="active">Articles</a>
       </li>
       <li>
@@ -26,7 +29,10 @@
   <nav class="mobile-nav" [ngClass]="{ active: isMenuOpen }">
     <ul>
       <li>
-        <a routerLink="/posts" class="navbar-link" routerLinkActive="active">Articles</a>
+        <button mat-button color="warn" (click)="logout()">Se déconnecter</button>
+      </li>
+      <li>
+        <a routerLink="/feed" class="navbar-link" routerLinkActive="active">Articles</a>
       </li>
       <li>
         <a routerLink="/topics" class="navbar-link" routerLinkActive="active">Thèmes</a>

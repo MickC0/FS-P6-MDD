@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -69,15 +70,18 @@ public class AuthController {
     public ResponseEntity<Map<String,String>> login(
             @Valid @RequestBody AuthRequest authRequest
     ) {
-        Authentication auth = authManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        authRequest.email(),
-                        authRequest.password()
-                )
-        );
-
-        String jwt = jwtService.generateToken(auth);
-        return ResponseEntity.ok(Map.of(TOKEN, jwt));
+        try {
+            Authentication auth = authManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            authRequest.email(),
+                            authRequest.password()
+                    )
+            );
+            String jwt = jwtService.generateToken(auth);
+            return ResponseEntity.ok(Map.of(TOKEN, jwt));
+        } catch (AuthenticationException ex) {
+            throw new IllegalArgumentException("Email ou mot de passe incorrect");
+        }
     }
 
     @GetMapping("/me")

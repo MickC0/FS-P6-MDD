@@ -10,6 +10,8 @@ import {User} from '../../../user/interfaces/User.interface';
 import {PostsService} from '../../services/posts.service';
 import {SessionService} from '../../../auth/services/session.service';
 import {NgForOf, NgIf} from '@angular/common';
+import {AuthService} from '../../../auth/services/auth.service';
+import {take} from 'rxjs';
 
 @Component({
   selector: 'app-posts',
@@ -35,21 +37,34 @@ export class PostsComponent {
 
   constructor(
     private postsService: PostsService,
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    private authService: AuthService
   ) {
   }
 
   ngOnInit(): void {
     this.user = this.sessionService.user;
-    this.postsService.getAllPosts(this.user!.id).subscribe({
-      next: (posts) =>
-        (this.posts = posts.sort(
-          (a, b) =>
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-        )),
-    });
+    if (!this.user) {
+      this.authService.me().pipe(take(1)).subscribe(user => {
+        this.sessionService.logIn(user);
+        this.user = user;
+        this.loadPosts();
+      });
+    } else {
+      this.loadPosts();
+    }
   }
+  private loadPosts(): void {
 
+    this.postsService
+      .getAllPosts(this.user!.id)  // user.id existe maintenant
+      .pipe(take(1))
+      .subscribe(posts => {
+        this.posts = posts.sort((a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+      });
+  }
   sortPosts(sortBy: string) {
     if (this.posts) {
       if (sortBy === 'date') {

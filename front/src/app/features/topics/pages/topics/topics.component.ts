@@ -5,6 +5,8 @@ import {TopicCardComponent} from '../../components/topic-card/topic-card.compone
 import {NgForOf} from '@angular/common';
 import {Topic} from '../../interfaces/Topic.interface';
 import {TopicsService} from '../../services/topics.service';
+import {take} from 'rxjs';
+import {SessionService} from '../../../auth/services/session.service';
 
 @Component({
   selector: 'app-topics',
@@ -19,15 +21,18 @@ import {TopicsService} from '../../services/topics.service';
   styleUrl: './topics.component.scss'
 })
 export class TopicsComponent {
-  allTopics: Topic[] | null = [];
+  allTopics: Topic[] = [];
 
-  constructor(private topicsService: TopicsService) {}
+  constructor(
+    private topicsService: TopicsService,
+    public  sessionService: SessionService
+  ) {}
 
   ngOnInit(): void {
-    this.topicsService.getAllTopics().subscribe({
-      next: (topics) => {
-        this.allTopics = topics;
-      },
-    });
+    this.topicsService.getAllTopics()
+      .pipe(take(1))
+      .subscribe(topics => (this.allTopics = topics));
+  }
+  onTopicSubscriptionChanged(): void {
   }
 }

@@ -1,56 +1,49 @@
 <app-auth-layout title="Se connecter">
   <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <mat-form-field class="form-field">
+
+    <!-- Email -->
+    <mat-form-field class="form-field" appearance="fill">
       <mat-label>Email</mat-label>
-      <input
-        matInput
-        type="email"
-        placeholder="email"
-        value=""
-        formControlName="email"
-      />
-
-      @if (loginForm.get('email')?.errors?.['email']) {
-        <mat-error
-        >Invalid email format. Please enter a valid email (eg:
-          <i>mondededev&#64;mail.com</i>).</mat-error
-        >
-      }
+      <input matInput type="email" placeholder="email" formControlName="email" />
+      <mat-error *ngIf="emailControl.hasError('required')">
+        L’email est requis.
+      </mat-error>
+      <mat-error *ngIf="emailControl.hasError('email')">
+        Format d’email invalide (ex : <i>mondededev&#64;mail.com</i>).
+      </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="form-field" fxFlex>
+    <!-- Password -->
+    <mat-form-field class="form-field" appearance="fill">
       <mat-label>Mot de passe</mat-label>
-      <input
-        matInput
-        type="{{ showPassword ? 'text' : 'password' }}"
-        placeholder="Enter your password"
-        value=""
-        formControlName="password"
-      />
-
-      <button
-        type="button"
-        mat-icon-button
-        matSuffix
-        (click)="showPassword = !showPassword"
-        [attr.aria-label]="'Masquer'"
-        [attr.aria-pressed]="showPassword"
-      >
-        <mat-icon>{{
-            showPassword ? "visibility_off" : "visibility"
-          }}</mat-icon>
+      <input matInput
+             [type]="showPassword ? 'text' : 'password'"
+             placeholder="Entrez votre mot de passe"
+             formControlName="password" />
+      <button type="button"
+              mat-icon-button
+              matSuffix
+              (click)="showPassword = !showPassword"
+              [attr.aria-label]="showPassword ? 'Masquer' : 'Afficher'">
+        <mat-icon>{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
       </button>
-      @if (loginForm.get('password')?.errors?.['pattern']) {
-        <mat-error>Password must be at least 8 characters long.</mat-error>
-      }
+      <mat-error *ngIf="passwordControl.hasError('required')">
+        Le mot de passe est requis.
+      </mat-error>
+      <mat-error *ngIf="passwordControl.hasError('pattern')">
+        Le mot de passe doit faire au moins 8 caractères,
+        contenir une majuscule, une minuscule et un chiffre.
+      </mat-error>
     </mat-form-field>
 
-    <button
-      mat-raised-button
-      color="primary"
-      [disabled]="loginForm.invalid"
-      type="submit"
-    >
+    <div class="error-message" *ngIf="onErrorSubmit">
+      Email ou mot de passe incorrect.
+    </div>
+
+    <button mat-raised-button
+            color="primary"
+            [disabled]="loginForm.invalid"
+            type="submit">
       Se connecter
     </button>
   </form>

@@ -70,4 +70,10 @@ public class TopicServiceImpl implements TopicService {
         }
         topicRepository.deleteById(id);
     }
+
+    @Override
+    public TopicEntity getTopicEntityById(Long id) {
+        return topicRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Topic not found with id " + id));
+    }
 }

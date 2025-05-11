@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { Topic } from '../../../topics/interfaces/Topic.interface';
 import { SessionService } from '../../../auth/services/session.service';
 import { AuthService } from '../../../auth/services/auth.service';
@@ -38,7 +38,7 @@ import { MatIconModule } from '@angular/material/icon'
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit{
   public topics: Topic[] = [];
   public showOldPassword: boolean = false;
   public showPassword: boolean = false;
@@ -47,16 +47,13 @@ export class ProfileComponent {
   userSubscriptions: Topic[] = [];
 
   constructor(
-    private sessionService: SessionService,
+    protected sessionService: SessionService,
     private authService: AuthService,
-    private router: Router
   ) {
-    this.router = router;
     this.sessionService = sessionService;
     this.authService = authService;
   }
 
-  // --- FORM CONTROLS ---
   public profileForm = new FormGroup({
     name: new FormControl('', [
       Validators.minLength(3),
@@ -76,34 +73,25 @@ export class ProfileComponent {
     ]),
   });
 
-  /**
-   * Fetch the current user's subscriptions and the update profile's form values.
-   *
-   * @return {void}
-   */
-  public ngOnInit(): void {
-    this.authService
-      .me()
-      .pipe(take(1))
-      .subscribe((user: User) => {
-        this.userSubscriptions = user.subscriptions;
 
-        this.profileForm.setValue({
-          email: user.email,
-          name: user.name,
-          oldPassword: '',
-          password: '',
-          password2: '',
-        });
+  ngOnInit(): void {
+    this.authService.me().pipe(take(1)).subscribe(user => {
+      this.sessionService.logIn(user);
+      this.userSubscriptions = user.subscriptions;
+      this.profileForm.setValue({
+        name:        user.name,
+        email:       user.email,
+        oldPassword: '',
+        password:    '',
+        password2:   ''
       });
+    });
   }
 
-  logout(): void {
-    this.sessionService.logOut();
-    this.router.navigate(['/']);
+  onSubscriptionsChanged(): void {
+    this.userSubscriptions = this.sessionService.user?.subscriptions ?? [];
   }
 
-  // --- SUBMIT ---
   onSubmit(): void {
     const updateProfileRequest = this.profileForm.value as UpdateRequest;
     this.authService.update(updateProfileRequest).subscribe({

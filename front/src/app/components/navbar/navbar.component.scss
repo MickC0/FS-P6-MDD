@@ -96,16 +96,17 @@ aside {
     height: 100%;
     width: 60%;
     background: white;
-    padding: 2rem;
+    padding: 0.5rem 1rem;;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-end;
     gap: 2rem;
     text-align: end;
-    font-size: 1.25rem;
+    font-size: 0.875rem;
     translate: 100% 0;
     transition: all 0.2s ease-in-out 0.2s;
+    white-space: nowrap;
 
     &.active {
       translate: 0 0;

@@ -3,16 +3,18 @@ package com.openclassrooms.mddapi.controller;
 import com.openclassrooms.mddapi.dto.TopicDto;
 import com.openclassrooms.mddapi.dto.UserDto;
 import com.openclassrooms.mddapi.entity.TopicEntity;
+import com.openclassrooms.mddapi.entity.UserEntity;
 import com.openclassrooms.mddapi.mapper.TopicMapper;
-import com.openclassrooms.mddapi.service.PostService;
 import com.openclassrooms.mddapi.service.TopicService;
 import com.openclassrooms.mddapi.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Set;
@@ -41,30 +43,39 @@ public class TopicController {
         return topicService.getAllTopics();
     }
 
-    @Operation(summary = "get topics", responses = {
-            @ApiResponse(responseCode = "200", description = "The list of topics is available"),
+    @Operation(summary = "Get a topic by its id", responses = {
+            @ApiResponse(responseCode = "200", description = "Topic found"),
+            @ApiResponse(responseCode = "400", description = "Topic id doesn't exist"),
             @ApiResponse(responseCode = "403", description = "Access unauthorized")
     })
     @GetMapping("/{id}")
     @Secured("ROLE_USER")
-    public TopicDto getTopicById(@PathVariable("id") long id) throws EntityNotFoundException {
+    public TopicDto getTopicById(@PathVariable("id") long id) {
         return topicService.getTopicById(id);
     }
 
     @Operation(summary = "Create a new topic", responses = {
             @ApiResponse(responseCode = "200", description = "Topic successfully created"),
-            @ApiResponse(responseCode = "400", description = "Invalid data"),
+            @ApiResponse(responseCode = "400", description = "Invalid data or duplicate topic"),
             @ApiResponse(responseCode = "403", description = "Access unauthorized")
     })
     @PostMapping("")
     @Secured("ROLE_USER")
     public TopicDto createTopic(@RequestBody TopicDto dto) {
-        return topicService.createTopic(dto);
+        try {
+            return topicService.createTopic(dto);
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    e.getMessage(),
+                    e
+            );
+        }
     }
 
-    @Operation(summary = "Subscribe the user to requested topic", responses = {
+    @Operation(summary = "Subscribe the user to the requested topic", responses = {
             @ApiResponse(responseCode = "200", description = "Successfully subscribed to topic"),
-            @ApiResponse(responseCode = "400", description = "Topic Id doesn't exist"),
+            @ApiResponse(responseCode = "400", description = "Topic id doesn't exist"),
             @ApiResponse(responseCode = "403", description = "Access unauthorized")
     })
     @PostMapping("/{id}/subscribe")
@@ -72,22 +83,29 @@ public class TopicController {
     public String subscribeTopic(
             @PathVariable("id") long id,
             Authentication authentication
-    ) throws EntityNotFoundException {
+    ) {
         String username = authentication.getName();
-        TopicDto  topicDto    = topicService.getTopicById(id);
-        TopicEntity topicEntity = topicMapper.toEntity(topicDto);
-        UserDto         userDto = userService.getUserProfile(username);
-        Set<TopicEntity> subs    = userDto.subscriptions();
+
+        // 1) Récupère l'entité Topic persistante
+        TopicEntity topicEntity = topicService.getTopicEntityById(id);
+
+        // 2) Récupère l'entité User persistante
+        UserDto userDto    = userService.getUserProfile(username);
+        UserEntity user    = userService.getUserEntityById(userDto.id());
+
+        // 3) Modifie les subscriptions
+        Set<TopicEntity> subs = user.getSubscriptions();
         if (subs.add(topicEntity)) {
             userService.updateSubscriptions(username, subs);
             return "Successfully subscribed";
+        } else {
+            return "User already subscribed to this topic";
         }
-        return "User already subscribed to this topic";
     }
 
-    @Operation(summary = "Unsubscribe the user from requested topic", responses = {
+    @Operation(summary = "Unsubscribe the user from the requested topic", responses = {
             @ApiResponse(responseCode = "200", description = "Successfully unsubscribed"),
-            @ApiResponse(responseCode = "400", description = "Topic Id doesn't exist"),
+            @ApiResponse(responseCode = "400", description = "Topic id doesn't exist"),
             @ApiResponse(responseCode = "403", description = "Access unauthorized")
     })
     @DeleteMapping("/{id}/subscribe")
@@ -95,16 +113,19 @@ public class TopicController {
     public String unsubscribeTopic(
             @PathVariable("id") long id,
             Authentication authentication
-    ) throws EntityNotFoundException {
+    ) {
         String username = authentication.getName();
-        TopicDto    topicDto    = topicService.getTopicById(id);
-        TopicEntity topicEntity = topicMapper.toEntity(topicDto);
-        UserDto         userDto = userService.getUserProfile(username);
-        Set<TopicEntity> subs    = userDto.subscriptions();
+
+        TopicEntity topicEntity = topicService.getTopicEntityById(id);
+        UserDto    userDto      = userService.getUserProfile(username);
+        UserEntity user         = userService.getUserEntityById(userDto.id());
+
+        Set<TopicEntity> subs = user.getSubscriptions();
         if (subs.remove(topicEntity)) {
             userService.updateSubscriptions(username, subs);
             return "Successfully unsubscribed";
+        } else {
+            return "User wasn't subscribed to this topic";
         }
-        return "User wasn't subscribed to this topic";
     }
 }

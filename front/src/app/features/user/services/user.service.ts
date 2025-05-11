@@ -11,12 +11,6 @@ export class UserService {
 
   constructor(private httpClient: HttpClient) {}
 
-  /**
-   * Retrieves a user by their ID.
-   *
-   * @param {number} id - The ID of the user to retrieve.
-   * @return {Observable<User>} An observable containing the retrieved user.
-   */
   public getUserById(id: number): Observable<User> {
     return this.httpClient.get<User>(`${this.baseUrl}/${id}`);
   }

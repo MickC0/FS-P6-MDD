@@ -26,70 +26,71 @@
       />
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field class="form-field" appearance="fill">
+      <mat-label>Votre mot de passe actuel</mat-label>
       <input
         matInput
-        [type]="showOldPassword ? 'password' : 'text'"
-        placeholder="Your current password"
-        formControlName="oldPassword"
+        [type]="showOldPassword ? 'text' : 'password'"
+      placeholder="Mot de passe actuel"
+      formControlName="oldPassword"
       />
       <button
         type="button"
         mat-icon-button
         matSuffix
         (click)="showOldPassword = !showOldPassword"
-        [attr.aria-label]="'Masquer'"
+        [attr.aria-label]="showOldPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'"
         [attr.aria-pressed]="showOldPassword"
       >
-        <mat-icon>{{
-            showOldPassword ? "visibility_off" : "visibility"
-          }}</mat-icon>
+        <mat-icon>
+          {{ showOldPassword ? 'visibility_off' : 'visibility' }}
+        </mat-icon>
       </button>
     </mat-form-field>
 
-    <mat-form-field class="form-field" fxFlex>
-      <mat-label>New Password ?</mat-label>
+    <!-- 2) Nouveau mot de passe -->
+    <mat-form-field class="form-field" appearance="fill">
+      <mat-label>Nouveau mot de passe</mat-label>
       <input
         matInput
-        type="{{ showPassword ? 'text' : 'password' }}"
-        placeholder="Enter your new password"
-        formControlName="password"
+        [type]="showPassword ? 'text' : 'password'"
+      placeholder="Entrez votre nouveau mot de passe"
+      formControlName="password"
       />
-
       <button
         type="button"
         mat-icon-button
         matSuffix
         (click)="showPassword = !showPassword"
-        [attr.aria-label]="'Masquer'"
+        [attr.aria-label]="showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'"
         [attr.aria-pressed]="showPassword"
       >
-        <mat-icon>{{
-            showPassword ? "visibility_off" : "visibility"
-          }}</mat-icon>
+        <mat-icon>
+          {{ showPassword ? 'visibility_off' : 'visibility' }}
+        </mat-icon>
       </button>
     </mat-form-field>
 
-    <mat-form-field class="form-field" fxFlex>
-      <mat-label>New Password confirmation</mat-label>
+    <!-- 3) Confirmation du mot de passe -->
+    <mat-form-field class="form-field" appearance="fill">
+      <mat-label>Confirmation du nouveau mot de passe</mat-label>
       <input
         matInput
-        type="{{ showPasswordConfirmation ? 'text' : 'password' }}"
-        placeholder="Confirm your new password"
-        formControlName="password2"
+        [type]="showPasswordConfirmation ? 'text' : 'password'"
+      placeholder="Confirmez votre nouveau mot de passe"
+      formControlName="password2"
       />
-
       <button
         type="button"
         mat-icon-button
         matSuffix
         (click)="showPasswordConfirmation = !showPasswordConfirmation"
-        [attr.aria-label]="'Masquer'"
+        [attr.aria-label]="showPasswordConfirmation ? 'Masquer le mot de passe' : 'Afficher le mot de passe'"
         [attr.aria-pressed]="showPasswordConfirmation"
       >
-        <mat-icon>{{
-            showPassword ? "visibility_off" : "visibility"
-          }}</mat-icon>
+        <mat-icon>
+          {{ showPasswordConfirmation ? 'visibility_off' : 'visibility' }}
+        </mat-icon>
       </button>
     </mat-form-field>
 
@@ -103,15 +104,15 @@
       Sauvegarder
     </button>
 
-    <button mat-button color="warn" (click)="logout()">Se déconnecter</button>
   </form>
   <hr />
-  <h2>Abonnements</h2>
-
+  <h1>Abonnements</h1>
   <app-grid-layout class="subscriptions-list">
     <app-topic-card
-      [topic]="topic"
       *ngFor="let topic of userSubscriptions"
+      [topic]="topic"
+      [user]="sessionService.user"
+      (subscriptionChange)="onSubscriptionsChanged()"
     ></app-topic-card>
   </app-grid-layout>
 </app-nav-layout>

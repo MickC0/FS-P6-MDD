@@ -8,14 +8,15 @@ import {RegisterComponent} from './features/auth/pages/register/register.compone
 import {PostsComponent} from './features/posts/pages/posts/posts.component';
 import {PostDetailComponent} from './features/posts/pages/post-detail/post-detail.component';
 import {NewPostComponent} from './features/posts/pages/new-post/new-post.component';
+import {AuthGuard} from './features/auth/guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', component: AuthComponent },
   { path: 'login', title: 'Se connecter', component: LoginComponent },
   { path: 'register', title: "S'inscrire", component: RegisterComponent },
-  { path: 'topics', title: 'Les thèmes', component: TopicsComponent },
-  { path: 'profile', title: 'Mon profil', component: ProfileComponent },
-  { path: 'feed', title: 'Bienvenue sur MDD', component: PostsComponent },
-  { path: 'post/:id', title: 'Bonne lecture', component: PostDetailComponent },
-  { path: 'create-post', title: 'Créer un article', component: NewPostComponent }
+  { path: 'topics', title: 'Les thèmes', component: TopicsComponent, canActivate: [AuthGuard] },
+  { path: 'profile', title: 'Mon profil', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'feed', title: 'Bienvenue sur MDD', component: PostsComponent, canActivate: [AuthGuard] },
+  { path: 'post/:id', title: 'Bonne lecture', component: PostDetailComponent, canActivate: [AuthGuard] },
+  { path: 'create-post', title: 'Créer un article', component: NewPostComponent, canActivate: [AuthGuard] }
 ];

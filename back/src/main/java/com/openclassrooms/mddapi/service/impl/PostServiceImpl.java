@@ -58,8 +58,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostDto createPost(PostDto dto) {
         UserEntity author = userService.getUserEntityById(dto.author_id());
-        TopicDto topicDto = topicService.getTopicById(dto.topic_id());
-        TopicEntity topicEntity = topicMapper.toEntity(topicDto);
+        TopicEntity topicEntity = topicService.getTopicEntityById(dto.topic_id());
         PostEntity toSave = postMapper.toEntity(dto, author, topicEntity);
         PostEntity saved = postRepository.save(toSave);
         return postMapper.toDto(saved);

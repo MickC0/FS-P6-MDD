@@ -1,8 +1,10 @@
 <app-nav-layout>
   <app-grid-layout class="topics-list">
     <app-topic-card
-      [topic]="topic"
       *ngFor="let topic of allTopics"
-    ></app-topic-card>
+      [topic]="topic"
+      [user]="sessionService.user"
+    (subscriptionChange)="onTopicSubscriptionChanged()">
+    </app-topic-card>
   </app-grid-layout>
 </app-nav-layout>

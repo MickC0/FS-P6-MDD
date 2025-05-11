@@ -10,7 +10,10 @@ import {AuthLayoutComponent} from '../../../../layouts/auth-layout/auth-layout.c
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
-import {MatIcon} from '@angular/material/icon';
+import {MatIconModule} from '@angular/material/icon';
+import {take} from 'rxjs';
+import {NgIf} from '@angular/common';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +25,8 @@ import {MatIcon} from '@angular/material/icon';
     MatFormFieldModule,
     ReactiveFormsModule,
     MatInputModule,
-    MatIcon,
+    MatIconModule,
+    NgIf,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -31,17 +35,18 @@ export class LoginComponent {
   public showPassword: boolean = false;
   public onErrorSubmit: boolean = false;
 
-  private authService: AuthService;
-
-  constructor(
-    authService: AuthService,
-    private router: Router,
-    private sessionService: SessionService
-  ) {
-    this.authService = authService;
+  ngOnInit() {
+    this.emailControl.valueChanges.subscribe(() => this.onErrorSubmit = false);
+    this.passwordControl.valueChanges.subscribe(() => this.onErrorSubmit = false);
   }
 
-  //--- FORM CONTROLS ---
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private sessionService: SessionService,
+    private snackBar: MatSnackBar
+  ) {}
+
   public loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [
@@ -50,22 +55,42 @@ export class LoginComponent {
     ]),
   });
 
-  // --- SUBMIT ---
-  public onSubmit(): void {
-    let temp = this.loginForm.value;
-    const loginRequest = temp as LoginRequest;
+  get emailControl(): FormControl {
+    return this.loginForm.get('email') as FormControl;
+  }
 
-    this.authService.login(loginRequest).subscribe({
-      next: (response: AuthSuccess) => {
-        localStorage.setItem('token', response.token);
-        this.authService.me().subscribe((user: User) => {
-          this.sessionService.logIn(user);
-          this.router.navigate(['/feed']);
-        });
-      },
-      error: () => {
-        this.onErrorSubmit = true;
-      },
-    });
+  get passwordControl(): FormControl {
+    return this.loginForm.get('password') as FormControl;
+  }
+
+  public onSubmit(): void {
+    this.onErrorSubmit = false;  // reset avant chaque tentative
+
+    const loginRequest = this.loginForm.value as LoginRequest;
+
+    this.authService.login(loginRequest)
+      .pipe(take(1))
+      .subscribe({
+        next: (response: AuthSuccess) => {
+          localStorage.setItem('token', response.token);
+          this.authService.me()
+            .pipe(take(1))
+            .subscribe((user: User) => {
+              this.sessionService.logIn(user);
+              this.router.navigate(['/feed']);
+            });
+        },
+        error: () => {
+          this.snackBar.open(
+            'Email ou mot de passe incorrect',
+            'Fermer',
+            {
+              duration: 5000,
+              panelClass: ['snackbar-error'],
+              verticalPosition: 'top'
+            }
+          );
+        }
+      });
   }
 }

@@ -7,14 +7,66 @@
   </div>
 
   <form class="new-post-form" [formGroup]="newPostForm" (ngSubmit)="onSubmit()">
+
     <mat-form-field>
       <mat-label>Sélectionner un thème</mat-label>
-      <mat-select formControlName="topic">
-        <mat-option *ngFor="let topic of allTopics" [value]="topic.id">
+      <mat-select
+        formControlName="topic"
+        (selectionChange)="onTopicSelection($event.value)"
+      >
+        <mat-option
+          *ngFor="let topic of allTopics"
+          [value]="topic.id"
+        >
           {{ topic.name }}
+        </mat-option>
+
+        <mat-divider></mat-divider>
+        <!-- option “virtuelle” pour déclencher la création -->
+        <mat-option [value]="-1" class="add-topic-option">
+          + Ajouter un thème
         </mat-option>
       </mat-select>
     </mat-form-field>
+
+    <div *ngIf="showCreateTopicForm" class="create-topic-inline">
+      <form [formGroup]="createTopicForm" (ngSubmit)="submitNewTopic()">
+        <mat-form-field appearance="fill">
+          <mat-label>Nom du thème</mat-label>
+          <input matInput formControlName="name" />
+          <mat-error *ngIf="nameControl.hasError('required')">
+            Le nom est requis.
+          </mat-error>
+          <mat-error *ngIf="nameControl.hasError('duplicate')">
+            {{ errorTopicMessage }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Description</mat-label>
+          <textarea matInput formControlName="description"></textarea>
+          <mat-error *ngIf="descriptionControl.hasError('required')">
+            La description est requise.
+          </mat-error>
+          <mat-error *ngIf="createTopicForm.controls['description'].hasError('maxlength')">
+            La description est trop longue
+            (max {{ createTopicForm.controls['description'].errors?.['maxlength']?.requiredLength }} caractères).
+          </mat-error>
+        </mat-form-field>
+
+
+        <div class="actions">
+          <button mat-button type="button" (click)="cancelNewTopic()">
+            Annuler
+          </button>
+          <button mat-raised-button color="primary" type="submit"
+                  [disabled]="createTopicForm.invalid">
+            Créer le thème
+          </button>
+        </div>
+      </form>
+    </div>
+
 
     <mat-form-field>
       <mat-label>Titre de l'article</mat-label>
