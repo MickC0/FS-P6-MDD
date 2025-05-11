@@ -18,7 +18,7 @@ Toutes les fonctionnalités essentielles sont exposées via une API RESTful séc
 ---
 
 ## Repository structure
-
+```
 MDD/
 ├── back/ # API Spring Boot
 │ ├── src/
@@ -30,7 +30,7 @@ MDD/
 │ └── README.md
 └── resources/ # Outils et scripts (postman, SQL, assets)
 └── ...
-
+```
 
 Chaque dossier contient son **README.md** dédié avec les instructions d’installation et d’utilisation.
 
